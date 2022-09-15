@@ -51,18 +51,53 @@
 [else "invalid month"])))
 ;25
 (define (list-member? e ls) (cond [(null? ls) #f][(equal? (car ls) e) #t][else (list-member? e (cdr ls))]))
-;26: I have exception error: apply to non-procedure 2. The recursive step I plan to do in python is: array = range(num1, num2 - 1); array.append(num2); return array
-(define range (lambda [num1 num2] (if (> num1 num2) '() (let [[array (range(num1 (- num2 1)))]] (append array '(num2))))))
+;26:
+(define (range num1 num2)
+(if (> num1 num2)
+    '()
+    (cons num1
+          (range (+ num1 1) num2))))
 ;27
-(define list-append (lambda [ls1 ls2] (if (and (list? ls1) (list? ls2)) (append ls1 ls2) "invalid input")))
-;28
+(define (list-append ls1 ls2)
+(cond [(null? ls1) ls2]
+      [(null? ls2) ls1]
+      [else (cons (car ls1) (list-append(cdr ls1) ls2))]
 
-;29
+)
 
+)
+;28: The recursive step I plan to do is: concat(list-flatten(lls[0]), list-flatten(lls[1:]))
+(define (list-flatten lls)
+(cond [(null? lls) '()]
+    [(not (pair? lls)) (list lls)]
+      [else (append (list-flatten (car lls))
+                    (list-flatten (cdr lls)))]
+)
+)
+;29: The recursive step I plan to do in python is: concat(fn(ls[0]), list-map(fn, ls[1:]))
+(define (list-map fn ls)
+    (lambda [fn ls]
+        (if (null? ls) '()
+            (append (fn (car ls)) (list-map(fn (cdr ls))))
+    )
+    )
+)
 ;30
+(define (list-filter p? ls)
+(cond [(null? ls) '()]
+      [(p? (car ls)) (cons (car ls) (list-filter p? (cdr ls)))]
+      [else (list-filter p? (cdr ls))]))
+;31: Use list-filter function above and list-length function in class to call in the list-counts function
+(define list-length
+(lambda [ls]
+    (if (null? ls)
+    0
+    (+ 1 (list-length (cdr ls))))))
 
-;31
+(define (list-counts p? ls)
+(lambda [p? ls] (list-length (list-filter p? ls)))
 
+)
 ;32: I have exception error: apply to non-procedure 8. For the recursive step I plan to do in python is: (3n+3)/5*fib2(n) - n/5*fib2(n+1)
 (define fib2 (lambda [n] (cond [(< n 0) "invalid input"][(= n 0) '()][(= n 1) '(0)][(= n 2) '(0 1)][else (- (* (/ (+ (* n 3) 3) 5) (fib2(n))) (* (/ n 5) (fib2(+ n 1))))])))
 ;33
