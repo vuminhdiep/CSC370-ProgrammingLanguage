@@ -100,7 +100,10 @@
 )
 ;32: I have exception error: apply to non-procedure 8. For the recursive step I plan to do in python is: (3n+3)/5*fib2(n) - n/5*fib2(n+1)
 (define fib2 (lambda [n] (cond [(< n 0) "invalid input"][(= n 0) '()][(= n 1) '(0)][(= n 2) '(0 1)][else (- (* (/ (+ (* n 3) 3) 5) (fib2(n))) (* (/ n 5) (fib2(+ n 1))))])))
-;33
+;33: I have exception error: attempt to apply non-procedure 6. But I plan to do the recursion in python is: if not ls: return [num].
+                                                                       ;if ls[0] > num: return [num] + ls
+                                                                       ;[ls[0]] + list-insert(num, ls[1:]) -> recursive step
+(define (list-insert num ls) (cond [(null? ls) (list(num))][(> (car ls) num) (cons (list(num)) ls)][else (cons (list (car ls)) list-insert(num (cdr ls)))]))
 
 ;34
 
