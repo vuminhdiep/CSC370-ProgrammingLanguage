@@ -10,21 +10,9 @@
 (map (lambda (x) (cons elt x)) ls))
 
 ;GRADE
-;3: Use dual recursion for odd and even function - from week02_examples.scm
-(define even?
-(lambda [x]
-  (cond
-   [(eq? x 0) #t]
-   [else (odd? (- x 1))])))
-
-(define odd?
-(lambda [x]
-  (cond
-   [(eq? x 0) #f]
-   [else (even? (- x 1))])))
-
+;3
 (define (x-odds nums)
-(map (lambda [e] (if (odd? e) "x" e)) nums))
+(map (lambda [e] (if (equal? (modulo e 2) 1) 'x e)) nums))
 
 ;GRADE
 ;4
